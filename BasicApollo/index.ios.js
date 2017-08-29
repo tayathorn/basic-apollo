@@ -6,14 +6,26 @@ import {
   View
 } from 'react-native';
 
+import { ApolloClient, createNetworkInterface, ApolloProvider } from 'react-apollo';
+
+const networkInterface = createNetworkInterface({
+  uri: 'http://api.example.com/graphql'
+});
+
+const client = new ApolloClient({
+  networkInterface: networkInterface
+});
+
 import App from './app'
 
 export default class BasicApollo extends Component {
   render() {
     return (
-      <View style={styles.container}>
-        <App/>
-      </View>
+      <ApolloProvider client={client}>
+        <View style={styles.container}>
+          <App/>
+        </View>
+      </ApolloProvider>
     );
   }
 }
