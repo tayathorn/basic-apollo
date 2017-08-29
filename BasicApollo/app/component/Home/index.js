@@ -6,7 +6,7 @@ import {
   ActivityIndicator
 } from 'react-native'
 
-import { gql, graphql } from 'react-apollo'
+import { gql, graphql, compose } from 'react-apollo'
 
 import Feed from '../Feed'
 
@@ -18,10 +18,38 @@ class Home extends Component {
 
   _renderFeed = () => {
     return this.props.data.posts.map((post) => {
-      console.log('post : ', post)
       return(
-        <Feed key={post.id} data={post}/>
+        <Feed key={post.id} data={post} onPressVoteButton={() => this.onPressVoteButton(post.id)}/>
       )
+    })
+  }
+
+  onPressVoteButton = (postId) => {
+    console.log('onPressVoteButton postId : ', postId)
+    
+    console.log('this.props : ', this.props)
+
+    // normal mutation
+    // this.props.mutate({
+    //   variables: { postId }
+    // })
+    // .then((response) => {
+    //   console.log('response :: ', response)
+    // })
+    // .catch((err) => {
+    //   console.log('err :: ', err)
+    // })
+
+
+    // mutation with name
+    this.props.votePost({
+      variables: { postId }
+    })
+    .then((res) => {
+      console.log('res : ', res)
+    })
+    .catch((err) => {
+      console.log('err : ', err )
     })
   }
 
@@ -74,6 +102,23 @@ const PostQuery = gql`
   }
 `
 
-const HomeWithFeed = graphql(PostQuery)(Home)
+const VotePost = gql`
+  mutation upvotePost($postId : Int!) {
+    upvotePost(postId: $postId) {
+      id
+      title 
+      votes
+    }
+  }
+`
+
+// const HomeWithFeed = graphql(PostQuery)(
+//   graphql(VotePost)(Home)
+// )
+
+const HomeWithFeed = compose(
+  graphql(PostQuery),
+  graphql(VotePost, { name: 'votePost' })
+)(Home)
 
 export default HomeWithFeed

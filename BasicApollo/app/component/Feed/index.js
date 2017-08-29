@@ -10,7 +10,6 @@ import {
 export default class Feed extends Component {
 
   render() {
-    console.log('Feed data : ', this.props.data)
     return(
       <View style={styles.container}>
         <View style={styles.wrapper}>
@@ -22,9 +21,9 @@ export default class Feed extends Component {
               <Text style={styles.authorTitle}>{`${this.props.data.author.firstName} ${this.props.data.author.lastName}`}</Text>
               <Text style={styles.postDetail.title}>{this.props.data.title}</Text>
               <Text>{`vote: ${this.props.data.votes}`}</Text>
-              {/*<View style={styles.voteButton}>
-                <Button title="Vote" color="#0277BD" onPress={this.props.onPressVote}/>
-    </View>*/}
+              <View style={styles.voteButton}>
+                <Button title="Vote" color="#ff8a80" onPress={this.props.onPressVoteButton}/>
+              </View>
             </View>
           </View>
         </View>
