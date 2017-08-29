@@ -6,10 +6,13 @@ import {
   View
 } from 'react-native';
 
-import { ApolloClient, createNetworkInterface, ApolloProvider } from 'react-apollo';
+import { ApolloClient, createNetworkInterface, ApolloProvider } from 'react-apollo'
+
+import { GRAPHQL_ENDPOINT } from './app/config'
+
 
 const networkInterface = createNetworkInterface({
-  uri: 'http://api.example.com/graphql'
+  uri: GRAPHQL_ENDPOINT
 });
 
 const client = new ApolloClient({

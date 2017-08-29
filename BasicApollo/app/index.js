@@ -5,41 +5,50 @@ import {
   View
 } from 'react-native';
 
-export default class App extends Component {
-  render() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+D or shake for dev menu
-        </Text>
-      </View>
-    );
-  }
-}
+import { Actions, Scene, Router, ActionConst } from 'react-native-router-flux'
 
-const styles = StyleSheet.create({
+import Home from './component/Home'
+
+const styles = {
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
+  navbar: {
+    backgroundColor: '#e15245'
   },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-});
+  navbarTitle: {
+    color: 'white',
+  }
+}
+
+const scenes = Actions.create(
+  <Scene key='root' navigationBarStyle={styles.navbar} titleStyle={styles.navbarTitle} >
+    <Scene key='home' component={Home} title='Home' initial={true} type={ActionConst.REPLACE}/>
+  </Scene>
+)
+
+export default class App extends Component {
+  render() {
+    return (
+      <Router scenes={scenes}/>
+    );
+  }
+}
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     justifyContent: 'center',
+//     alignItems: 'center',
+//   },
+//   navbar: {
+//     backgroundColor: '#212121'
+//   }
+// });
+
+
+
+
 

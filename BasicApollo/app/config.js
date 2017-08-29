@@ -1,0 +1,1 @@
+export const GRAPHQL_ENDPOINT = 'https://47r4l0m89.lp.gql.zone/graphql'
